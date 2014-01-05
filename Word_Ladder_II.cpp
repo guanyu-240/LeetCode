@@ -5,18 +5,24 @@ public:
     vector<vector<string>> findLadders(string start, string end, unordered_set<string> &dict) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        ret.clear(); predsMap.clear();
+
+        // Clear return vector and the predecessor map
+        ret.clear(); 
+        predsMap.clear();
+
+        // Initialize the predecessor map
         unordered_set<string>::iterator it;
         for (it = dict.begin(); it != dict.end(); ++it) {
             predsMap[*it] = unordered_set<string>();
         }
         predsMap[end] = unordered_set<string>();
+       
+        // Breadth first seach process
         queue<string> words;
         unordered_set<string> cands;
         words.push(start);
         int remain = 1;
-        string tmp;
-        string cand;
+        string tmp, cand;
         char original;
         bool endSearch = false;
         while (!words.empty()) {
@@ -32,14 +38,14 @@ public:
                         endSearch = true;
                         predsMap[end].insert(cand);
                     }
-                    if (dict.find(tmp) != dict.end()) {
+                    if (!endSearch && dict.find(tmp) != dict.end()) {
                         cands.insert(tmp);
                         predsMap[tmp].insert(cand);
                     }
                 }
                 tmp[i] = original;
             }
-            if (remain == 0) {
+            if (remain == 0) {          // ready to start the next level or terminate
                 if (endSearch) break;
                 for (it = cands.begin(); it != cands.end(); ++ it) {
                     words.push(*it);
@@ -49,13 +55,14 @@ public:
                 cands.clear();
             }
         }
-        vector<string> res;
-        res.push_back(end);
-        trace(res, start, end);
+
+        // generate the results
+        genResults(vector<string>(1, end), start, end);
         return ret;
+
     }
-    
-    void trace(vector<string> res, string start, string end){
+   
+    void genResults(vector<string> res, string start, string end){
         if (end == start) {
             reverse(res.begin(), res.end());
             ret.push_back(res);
@@ -66,7 +73,7 @@ public:
         for (it = preds.begin(); it != preds.end(); ++it) {
             vector<string> newRes(res);
             newRes.push_back(*it);
-            trace(newRes, start, *it);
+            genResults(newRes, start, *it);
         }
     }
 };
