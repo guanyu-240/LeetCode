@@ -1,6 +1,7 @@
 class Solution {
 public:
     /*
+    Algorithm: Greedy and backtrace.
     Reference: Yu's Coding Garden
     URL: http://yucoding.blogspot.com/2013/02/leetcode-question-123-wildcard-matching.html
     */
