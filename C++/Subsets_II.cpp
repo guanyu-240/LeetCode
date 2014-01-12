@@ -1,5 +1,11 @@
 class Solution {
 public:
+    /*
+    Recursion Function:
+    For a existing subset s, there are k distinct unselected numbers.
+    Generate k new different subsets by copying s and append a candidate number.
+    For every new subset, call recursion function if this subset can generate new subsets.
+    */
     vector<vector<int> > ret;
     vector<vector<int> > subsetsWithDup(vector<int> &S) {
         // Start typing your C/C++ solution below
