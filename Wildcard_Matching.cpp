@@ -22,6 +22,7 @@ public:
                 s = ++starS;
                 continue;
             }
+			return false;
         }
         while (*p == '*') p++;
         if (*p) return false;
