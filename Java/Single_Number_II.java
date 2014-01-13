@@ -1,9 +1,7 @@
-class Solution {
-
-public:
-
-    int singleNumber(int A[], int n) {
+public class Solution {
+    public int singleNumber(int[] A) {
         // Note: The Solution object is instantiated only once and is reused by each test case.
+        int n = A.length;
         if (n == 0) return 0;
         int one = 0, two = 0, zero = ~0;
         /*
@@ -25,4 +23,4 @@ public:
         }
         return one;
     }
-};
+}
