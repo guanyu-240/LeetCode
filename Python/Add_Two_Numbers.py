@@ -9,7 +9,6 @@ class Solution:
     def addTwoNumbers(self, l1, l2):
         ptr1 = l1
         ptr2 = l2
-        digit = 0
         carry = 0
         ret = None
         ptr = ret
