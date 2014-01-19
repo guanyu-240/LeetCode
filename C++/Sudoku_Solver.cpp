@@ -1,18 +1,12 @@
 class Solution {
 public:
     int count;
-    bool rows[9][9];
-    bool cols[9][9];
-    bool blks[9][9];
     void solveSudoku(vector<vector<char> > &board) {
+        bool rows[9][9] = { false }; // rows[m][n]: if the row m ahready has number n
+        bool cols[9][9] = { false }; // cols[m][n]: if the col m already has number n
+        bool blks[9][9] = { false }; // cols[m][n]: if the col m already has number n
+        int n;
         count = 0;
-        int n = 0;
-        // initialize
-        for (int i = 0; i < 9; i ++) {
-            for (int j = 0; j < 9; j ++) {
-                rows[i][j] = cols[i][j] = blks[i][j] = false;
-            }
-        }
         for (int i = 0; i < 9; i ++) {
             for (int j = 0; j < 9; j ++) {
                 if (board[i][j] != '.') {
@@ -22,10 +16,10 @@ public:
                 }
             }
         }
-        solve(board);
+        solve(board, rows, cols, blks);
     }
     
-    bool solve(vector<vector<char>> &board) {
+    bool solve(vector<vector<char>> &board, bool (&rows)[9][9], bool (&cols)[9][9], bool (&blks)[9][9]) {
         if (count == 81) return true;
         for (int i = 0; i < 9; i ++) {
             for (int j = 0; j < 9; j ++) {
@@ -35,7 +29,7 @@ public:
                             board[i][j] = n + '0';
                             rows[i][n-1] = cols[j][n-1] = blks[(i/3)*3+j/3][n-1] = true;
                             count ++;
-                            if (solve(board)) return true;
+                            if (solve(board, rows, cols, blks)) return true;
                             board[i][j] = '.';
                             rows[i][n-1] = cols[j][n-1] = blks[(i/3)*3+j/3][n-1] = false;
                             count --;
