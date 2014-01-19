@@ -13,23 +13,28 @@ public:
         if (head == NULL) {
             return head;
         }
-        ListNode *start = head, *end = head;
+        ListNode *newTail = head, *tail = head;
+        /*
+        The following loop does not directly fetch the tail of the original list and the new list.
+        It tries to find the distance in the original list.
+        And finally advance them together and move them to the right locations
+        */
         for (int i = 1; i <= k; i ++){
-            if (end->next == NULL){
-                end = head;
+            if (tail->next == NULL){
+                tail = head;
             }
             else {
-                end = end->next;
+                tail = tail->next;
             }
         }
-        if (start == end) return head;
-        while (end->next != NULL) {
-            start = start->next;
-            end = end->next;
+        if (newTail == tail) return head;  // indicating no need to do any rotations
+        while (tail->next != NULL) {        
+            newTail = newTail->next;
+            tail = tail->next;
         }
-        ListNode *ret = start->next;
-        start->next = NULL;
-        end->next = head;
+        ListNode *ret = newTail->next;
+        newTail->next = NULL;
+        tail->next = head;
         return ret;
     }
 };
