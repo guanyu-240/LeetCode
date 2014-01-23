@@ -4,7 +4,7 @@ public:
     void solveSudoku(vector<vector<char> > &board) {
         bool rows[9][9] = { false }; // rows[m][n]: if the row m ahready has number n
         bool cols[9][9] = { false }; // cols[m][n]: if the col m already has number n
-        bool blks[9][9] = { false }; // cols[m][n]: if the col m already has number n
+        bool blks[9][9] = { false }; // blks[m][n]: if the blk m already has number n
         int n;
         count = 0;
         for (int i = 0; i < 9; i ++) {
