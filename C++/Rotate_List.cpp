@@ -15,8 +15,10 @@ public:
         }
         ListNode *newTail = head, *tail = head;
         /*
-        The following loop does not directly fetch the tail of the original list and the new list.
-        It tries to find the distance in the original list.
+        The following loop tries to fetch the distance between 
+        the tail of the original list 
+        and 
+        the tail of the new list.
         And finally advance them together and move them to the right locations
         */
         for (int i = 1; i <= k; i ++){
