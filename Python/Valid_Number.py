@@ -3,17 +3,17 @@ class Solution:
     # @return a boolean
     """
     Finite auto-mata solution
-       char index from 0 to 4 are '+/-', 'digit', 'E/e', '.', ' '.
-       9 states:
-          0: start
-          1: +/- after start
-          2: digits
-          3: middle '.' discovered
-          4: E/e discovered
-          5: +/- after E/e
-          6: digits after e
-          7: beginning '.' discovered
-          8: traling ' '
+    char index from 0 to 4 are '+/-', 'digit', 'E/e', '.', ' '.
+    9 states:
+        0: start
+        1: +/- after start
+        2: digits
+        3: middle '.' discovered
+        4: E/e discovered
+        5: +/- after E/e
+        6: digits after e
+        7: beginning '.' discovered
+        8: traling ' '
     """
     def __init__(self):
         self.__transitMatrix = [
