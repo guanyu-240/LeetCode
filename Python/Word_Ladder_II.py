@@ -17,6 +17,7 @@ class Solution:
         q.append(start)
         cands = set()
         endSearch = False
+        # start BFS search
         while len(q) > 0:
             word = q.pop()
             wlist = list(word)
@@ -26,9 +27,11 @@ class Solution:
                 for c in self.__allTheLetters:
                     wlist[i] = c
                     newWord = ''.join(wlist)
+                    # is the end word
                     if newWord == end:
                         endSearch = True
                         self.__preds[newWord].add(word)
+                    # find a word in the dictionary
                     if not endSearch and newWord in dict:
                         cands.add(newWord)
                         self.__preds[newWord].add(word)
@@ -41,7 +44,10 @@ class Solution:
                 cands.clear()
         self.__genResults([end], start, end)
         return self.__ret
-        
+    
+    """
+    Recursively generate results
+    """    
     def __genResults(self, result, start, end):
         if end == start:
             self.__ret.append(result[::-1])
