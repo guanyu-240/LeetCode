@@ -8,26 +8,22 @@
  * };
  */
 class Solution {
+private:
+    TreeNode *buildTreeRecursively(vector<int> &inorder, int startI, 
+                                   vector<int> &postorder, int startP, int n) {
+        if (n == 0) return NULL;
+        TreeNode *ret = new TreeNode(postorder[startP+n-1]);
+        int offset = 0;
+        while (offset < n) {
+            if (inorder[startI+offset] == postorder[startP+n-1]) break;
+            offset ++;
+        }
+        ret->left = buildTreeRecursively(inorder, startI, postorder, startP, offset);
+        ret->right = buildTreeRecursively(inorder, startI+offset+1, postorder, startP+offset, n-offset-1);
+        return ret;
+    }
 public:
     TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
-        // Note: The Solution object is instantiated only once and is reused by each test case.
-        return solve(inorder, 0, postorder, 0, inorder.size());
-    }
-    TreeNode *solve(vector<int> &inorder, int startI, vector<int> &postorder, int startP, int len){
-        if (len == 0) {
-            return NULL;
-        }
-        int rootVal = postorder[startP + len - 1];
-        TreeNode *root = new TreeNode(rootVal);
-        int rootOffset = 0;
-        for (int n = 0; n < len; n ++) {
-            if (inorder[startI + n] == rootVal){
-                rootOffset = n;
-                break;
-            }
-        }
-        root->left = solve(inorder, startI, postorder, startP, rootOffset);
-        root->right = solve(inorder, startI+rootOffset+1, postorder, startP+rootOffset, len-rootOffset-1);
-        return root;
+        return buildTreeRecursively(inorder, 0, postorder, 0, inorder.size());
     }
 };
