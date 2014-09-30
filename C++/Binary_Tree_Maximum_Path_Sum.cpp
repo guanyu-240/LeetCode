@@ -8,39 +8,28 @@
  * };
  */
 class Solution {
-public:
-    int maxVal;
-    int maxSubTree;
-    int maxEndHere;
-    int maxPathSum(TreeNode *root) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        maxVal = INT_MIN;
-        maxPathEndAtCurrent(root);
-        return maxVal;
-    }
-    
     /*
-    For every node, there are several candidates which might contribute to
-    maximum sum path END AT THE CURRENT NODE, let it be max_end_here(node):
-    max_end_here(left) + node
-    max_end_here(right) + node
-    node it self
-    There are several candidates(related to the current node) that will contribute to max value to return:
-    node + leftmax
-    node + rightmax
-    node it self
-    node + leftmax + rightmax
-    And the max of first 3 will be selected to max_end_here(current)
+    For every root, there are 4 candidate paths(across this root) for maximum path sum
+    root only
+    root + <max weight path ending at left child>
+    root + <max weight path ending at right child>
+    root + <max weight path ending at left child> + <max weight path ending at right child>
     */
-    int maxPathEndAtCurrent(TreeNode *root){
+private:
+    int maxPath;
+    int maxAcrossThisRoot;
+    int maxEndThisRoot(TreeNode *root){
         if (root == NULL) return 0;
-        int leftMax = maxPathEndAtCurrent(root->left);
-        int rightMax = maxPathEndAtCurrent(root->right);
-        maxSubTree = max(leftMax, rightMax);
-        maxEndHere = max(root->val, maxSubTree + root->val);
-        maxVal = max(maxEndHere, maxVal);
-        maxVal = max(maxVal, leftMax+rightMax+root->val);
-        return maxEndHere;
+        int maxEndL = maxEndThisRoot(root->left);
+        int maxEndR = maxEndThisRoot(root->right);
+        maxAcrossThisRoot = root->val + max(maxEndL, 0) + max(maxEndR, 0);
+        maxPath = max(maxPath, maxAcrossThisRoot);
+        return root->val + max(max(maxEndL, maxEndR), 0);
+    }
+public:
+    int maxPathSum(TreeNode *root) {
+        maxPath = INT_MIN;
+        maxEndThisRoot(root);
+        return maxPath;
     }
 };
