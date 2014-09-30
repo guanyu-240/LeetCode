@@ -8,22 +8,26 @@
  * }
  */
 public class Solution {
-    private int maxEndCurNode;
-    private int maxPathValue;
-    private int maxSub;
+    private int maxPath;
+    private int maxPathAcrossThisRoot;
+    /*
+    For every root, there are 4 candidate paths(across this root) for maximum path sum
+    root only
+    root + <max weight path ending at left child>
+    root + <max weight path ending at right child>
+    root + <max weight path ending at left child> + <max weight path ending at right child>
+    */
     public int maxPathSum(TreeNode root) {
-        // Note: The Solution object is instantiated only once and is reused by each test case.
-        maxPathValue = Integer.MIN_VALUE;
-        maxEndHere(root);
-        return maxPathValue;
+        maxPath = Integer.MIN_VALUE;
+        maxEndThisRoot(root);
+        return maxPath;
     }
-    public int maxEndHere(TreeNode root) {
+    private int maxEndThisRoot(TreeNode root) {
         if (root == null) return 0;
-        int maxLeftSub = maxEndHere(root.left);
-        int maxRightSub = maxEndHere(root.right);
-        maxSub = Math.max(maxLeftSub, maxRightSub);
-        maxEndCurNode = Math.max(maxSub+root.val, root.val);
-        maxPathValue = Math.max(Math.max(maxPathValue, maxEndCurNode), maxLeftSub+maxRightSub+root.val);
-        return maxEndCurNode;
+        int maxEndL = maxEndThisRoot(root.left);
+        int maxEndR = maxEndThisRoot(root.right);
+        maxPathAcrossThisRoot = root.val + Math.max(maxEndL, 0) + Math.max(maxEndR, 0);
+        maxPath = Math.max(maxPath, maxPathAcrossThisRoot);
+        return root.val + Math.max(Math.max(maxEndL, maxEndR), 0);
     }
 }
