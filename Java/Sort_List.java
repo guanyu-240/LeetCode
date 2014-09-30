@@ -11,48 +11,45 @@
  */
 public class Solution {
     public ListNode sortList(ListNode head) {
-        if (head == null) return head;
-        int len = 0;
+        int n = 0;
         ListNode ptr = head;
         while (ptr != null) {
-            len ++;
+            n ++;
             ptr = ptr.next;
         }
-        return solve(head, len);
+        return sortListRecursively(head, n);
     }
-    public ListNode solve(ListNode head, int len) {
-        if (len == 1) return head;
+    
+    private ListNode sortListRecursively(ListNode head, int n){
+        if (n <= 1) return head;
         ListNode ptr = head;
-        int index = 1;
-        while (index < len/2) {
+        int len = 1;
+        while (len < n/2) {
             ptr = ptr.next;
-            index ++;
+            len ++;
         }
-        ListNode h2 = solve(ptr.next, len-index);
+        ListNode secondHalf = ptr.next;
         ptr.next = null;
-        ListNode h1 = solve(head, index);
-        return merge(h1, h2);
+        return mergeLists(sortListRecursively(head, n/2), sortListRecursively(secondHalf, n-n/2));
     }
-    public ListNode merge(ListNode h1, ListNode h2) {
-        ListNode ret = null;
-        ListNode ptr = ret;
-        ListNode ptr1 = h1, ptr2 = h2;
+    
+    private ListNode mergeLists(ListNode h1, ListNode h2){
+        ListNode ret = null, retPtr = null, ptr1 = h1, ptr2 = h2;
         while (ptr1 != null && ptr2 != null) {
             if (ptr1.val < ptr2.val) {
-                if (ret == null) ret = ptr1;
-                else ptr.next = ptr1;
-                ptr = ptr1;
+                if (retPtr != null) retPtr.next = ptr1;
+                retPtr = ptr1;
                 ptr1 = ptr1.next;
             }
             else {
-                if (ret == null) ret = ptr2;
-                else ptr.next = ptr2;
-                ptr = ptr2;
+                if (retPtr != null) retPtr.next = ptr2;
+                retPtr = ptr2;
                 ptr2 = ptr2.next;
             }
+            if (ret == null) ret = retPtr;
         }
-        if (ptr1 != null) ptr.next = ptr1;
-        if (ptr2 != null) ptr.next = ptr2;
+        if (ptr1 != null) retPtr.next = ptr1;
+        if (ptr2 != null) retPtr.next = ptr2;
         return ret;
     }
 }
