@@ -8,25 +8,23 @@
  * }
  */
 public class Solution {
-    private TreeNode visited;
+    /*
+    Pre-order flatten method
+    */
+    private TreeNode lastVisited;
     public void flatten(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if (root == null) return;
-        visited = null;
-        solve (root);
-    }
-    private void solve(TreeNode root) {
-        visited = root;
+        lastVisited = root;
         if (root.left == null && root.right == null) return;
+        TreeNode rightTree = root.right;
         if (root.left != null) {
-            solve(root.left);
-            visited.right = root.right;
+            flatten(root.left);
             root.right = root.left;
             root.left = null;
+            lastVisited.right = rightTree;
         }
-        if (visited.right != null) {
-            solve (visited.right);
+        if (rightTree != null) {
+            flatten(rightTree);
         }
-    }
+    } 
 }
