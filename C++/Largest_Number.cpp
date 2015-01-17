@@ -7,7 +7,7 @@ public:
         for (int i = 0; i < len; i ++) {
             if (s1[i] != s2[i]) return s1[i] > s2[i];
         }
-        return s1.length() > s2.length();
+        return false;
     }
     string largestNumber(vector<int> &num) {
         if (num.size() == 0) return "";
