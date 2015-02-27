@@ -8,13 +8,11 @@ public:
         int encode = 0;
         int mask = ~(~0 << 20);
         for (int i = 0; i < 10; i ++) {
-            encode <<= 2;
-            encode += getBit(s[i]);
+            encode = (encode << 2) | getBit(s[i]);
         }
         ++ dnaSeqs[encode];
         for (int i = 10; i < n; i ++) {
-            encode = (encode << 2) & mask;
-            encode += getBit(s[i]);
+            encode = ((encode << 2) & mask) | getBit(s[i]);
             if ((++dnaSeqs[encode]) == 2) {
                 ret.push_back(s.substr(i-10+1, 10));
             }
@@ -22,7 +20,7 @@ public:
         return ret;
     }
     
-    int getBit(char c) {
+    inline int getBit(char c) {
         switch (c) {
             case 'C': return 1;
             case 'G': return 2;
