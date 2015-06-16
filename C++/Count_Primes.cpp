@@ -8,6 +8,11 @@ public:
         double sq = sqrt((double)n);
         isPrime[0] = isPrime[1] = false;
         for (int i = 2; i < sq; i ++) {
+            /*
+            -If i is a prime, i*j should not be prime
+            -If i is not a prime, i*j is already been updated, 
+             no need to re-update
+            */
             if (isPrime[i]) {
                 for (int j = 2; j*i < n; j ++) {
                     isPrime[i*j] = false;
