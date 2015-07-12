@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
         /*
-        Topological Sort
+        Breadth-First-Search Topological Sort
         */
         vector<vector<int>> adjList(numCourses, vector<int>());
         vector<int>countIncoming(numCourses, 0);
