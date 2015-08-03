@@ -6,34 +6,21 @@ public:
         if (len == 0) {
             return 0;
         }
-        int ret = 0;
-        unordered_map<int, int> seq_index;
-        unordered_map<int, int>::iterator it;
-        for (int n = 0; n < len; n ++){
-            seq_index[num[n]] = n;
-        }
-        vector<int> visited(num.size(), 0);
-        for (int n = 0; n < len; n ++){
-            if (visited[n] == 1) continue;
-            visited[n] = 1;
-            int seq_len = 1;
-            int number = num[n] + 1;
-            it = seq_index.find(number);
-            while (it != seq_index.end()){
-                visited[it->second] = 1;
-                seq_len ++;
-                number ++;
-                it = seq_index.find(number);
+        unordered_set<int> num_set;
+        for (int x : num) { num_set.insert(x); }
+        int back,front = 0;
+        int ret = 1;
+        for (int x : num_set) {
+            back = front = x;
+            while (num_set.find(back-1) != num_set.end()) {
+                back --;
+                num_set.erase(back);
             }
-            number = num[n] - 1;
-            it = seq_index.find(number);
-            while (seq_index.find(number) != seq_index.end()){
-                visited[it->second] = 1;
-                seq_len ++;
-                number --;
-                it = seq_index.find(number);
+            while (num_set.find(front+1) != num_set.end()) {
+                front ++;
+                num_set.erase(front);
             }
-            ret = max(ret, seq_len);
+            ret = max(ret, front-back+1);
         }
         return ret;
     }
