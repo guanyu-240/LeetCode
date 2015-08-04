@@ -4,8 +4,8 @@ public:
     Idea: always keeping track of maximum distance covered by a specific number of steps.
     Originally, 0 steps will cover the distance of 0
     */
-    int jump(int A[], int n) {
-        // Note: The Solution object is instantiated only once and is reused by each test case.
+    int jump(vector<int> &nums) {
+        int n = nums.size();
         int numSteps = 0;
         int distCovered = 0;
         int distCoveredNext = 0;
@@ -21,7 +21,7 @@ public:
                 numSteps ++;
             }
             // update maximum distance of one more step
-            distCoveredNext = max(distCoveredNext, A[i] + i);
+            distCoveredNext = max(distCoveredNext, nums[i] + i);
         }
         return numSteps;
     }
