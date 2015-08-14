@@ -1,6 +1,9 @@
 class Solution {
 public:
     bool verifyPreorder(vector<int>& preorder) {
+        /*
+        Using a stack to simulate the pre-order traversal
+        */
         if (preorder.size() <= 1) return true;
         stack<int> st;
         int lower_bound = INT_MIN;
