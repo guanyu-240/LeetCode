@@ -1,22 +1,29 @@
 class Solution {
 public:
     bool validTree(int n, vector<pair<int, int>>& edges) {
+        /* BFS */
         if (edges.size() != n-1) return false;
-        int vertexes[n];
-        fill_n(vertexes, n, 0);
+        vector<vector<int>> adj_table (n, vector<int>());
+        vector<bool> visited(n, false);
+        queue<int> q;
+        int cur = 0;
         for (pair<int, int> &e : edges) {
-            vertexes[e.first] ++;
-            vertexes[e.second] ++;
+            adj_table[e.first].push_back(e.second);
+            adj_table[e.second].push_back(e.first);
         }
-        /* Check if the graph has any isolated edge */
-        for (pair<int, int> &e : edges) {
-            if (vertexes[e.first] == 1 && vertexes[e.second] == 1 && n > 2) {
-                return false;
+        q.push(0);
+        while (!q.empty()) {
+            cur = q.front();
+            q.pop();
+            visited[cur] = true;
+            for (int v : adj_table[cur]) {
+                if (!visited[v]) {
+                    q.push(v);
+                }
             }
         }
-        /* Check if the graph has any isolated vertex */
-        for (int v = 0; v < n; v++) {
-            if (vertexes[v] == 0 && n != 1) return false;
+        for (bool isVisited : visited) {
+            if (!isVisited) return false;
         }
         return true;
     }
