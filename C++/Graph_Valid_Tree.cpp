@@ -21,7 +21,9 @@ public:
                 q.push(v);
             }
         }
-
+        for (bool isVisited : visited) {
+            if (!isVisited) return false;
+        }
         return true;
     }
 };
