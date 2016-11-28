@@ -8,20 +8,31 @@
  * }
  */
 public class Solution {
+    List<String> ret;
     public List<String> binaryTreePaths(TreeNode root) {
-        List<String> ret = new ArrayList<String>();
+        ret = new LinkedList<String>();
+        StringBuilder pred = new StringBuilder();
         if (root == null) return ret;
-        ret = binaryTreePaths(root.left);
-        ret.addAll(binaryTreePaths(root.right));
-        if (ret.size() == 0) {
-            ret.add(Integer.toString(root.val));
-        }
-        else {
-            for (int i = 0; i < ret.size(); i++) {
-                ((ArrayList<String>)ret).set(i, 
-                    root.val+"->"+((ArrayList<String>)ret).get(i));
-            }
-        }
+        solve(root, pred);
         return ret;
+    }
+    private void solve(TreeNode root, StringBuilder pred) {
+        int count_added = 0;
+        if (pred.length() > 0) {
+            pred.append("->");
+            count_added = 2;
+        }
+        pred.append(root.val);
+        count_added += Integer.toString(root.val).length();
+        if (root.left == null && root.right == null) {
+            ret.add(pred.toString());
+        }
+        if (root.left != null) {
+            solve(root.left, pred);
+        }
+        if (root.right != null){
+            solve(root.right, pred);
+        }
+        pred.setLength(pred.length()-count_added);
     }
 }
