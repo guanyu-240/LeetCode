@@ -1,23 +1,27 @@
 class Solution(object):
-    def getNumber(self, num, start):
-        while num[start] == '0' and start < len(num)-1:
-            start += 1
-        return ''.join(num[start:])
     def removeKdigits(self, num, k):
         """
         :type num: str
         :type k: int
         :rtype: str
         """
-        if k >= len(num): return '0'
-        num = list(num)
-        for i in range(k):
-            j = i+1
-            # then num[i] stores the candidate
-            while j < len(num) and num[i] <= num[j]:
-                # the candidate should not be removed, pushed next
-                tmp = num[i]
-                num[i] = num[j]
-                num[j] = tmp
-                j += 1
-        return self.getNumber(num, k)
+        n = len(num)
+        if k >= n: return '0'
+        count = 1
+        idx = 0
+        st = []
+        # Always select the peak starting from the beginning
+        while count <= k:
+            if len(st) > 0 and (idx == len(num) or st[len(st)-1] > num[idx]):
+                st.pop()
+                count += 1
+            else: 
+                st.append(num[idx])
+                idx += 1
+        tmp = ''.join(st) + num[idx:]
+        start = 0
+        while start < len(tmp):
+            if tmp[start] == '0': start += 1
+            else: break
+        if start == len(tmp): return '0'
+        else: return tmp[start:]
