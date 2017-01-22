@@ -9,19 +9,19 @@ class LRUCache:
 
     # @return an integer
     def get(self, key):
-        node = self.__cacheMap.get(key)
-        if node == None: return -1
+        if key not in self.__cacheMap: return -1
+        node = self.__cacheMap[key]
         self.__moveToEnd(node)
         return node.v
 
     # @param key, an integer
     # @param value, an integer
     # @return nothing
-    def set(self, key, value):
-        node = self.__cacheMap.get(key)
-        if node == None:
+    def put(self, key, value):
+        if key not in self.__cacheMap:
             self.__addNew(key, value)
         else:
+            node = self.__cacheMap[key]
             node.v = value
             self.__moveToEnd(node)
     
