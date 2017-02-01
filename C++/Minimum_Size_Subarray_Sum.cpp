@@ -10,7 +10,7 @@ public:
         while (y < n && x <= y) {
             if (ss < s) {
                 ++y;
-                ss += nums[y];
+                if (y < n) ss += nums[y];
             }
             else {
                 ret = min(ret, y-x+1);
